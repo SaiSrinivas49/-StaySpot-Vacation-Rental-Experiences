@@ -1,0 +1,11 @@
+{
+  "_note": "This file is intentionally a placeholder until MongoDB is actually queried. Do not submit fabricated execution statistics. Run generate_execution_stats.js after seeding the database to replace this file with the raw explain(\"executionStats\") output.",
+  "workflow": "Workflow 3 - Trending Search Hotspots",
+  "collection": "SearchSessions",
+  "explain_mode": "executionStats",
+  "query": {
+    "near": [78.4867, 17.385],
+    "maxDistanceMeters": 5000
+  },
+  "raw_explain_output": null
+}
