@@ -9,6 +9,8 @@
 
 # Assumptions
 
+# PostgreSQL
+
 PostgreSQL is used for transactional data such as guests, properties, bookings, wallet balances, and audit logs.
 
 MongoDB is used for geospatial telemetry data and aggregation-based analytics.
@@ -35,36 +37,6 @@ Workflow 3 — trending search hotspots using $geoNear (Step 3.3)
 
 Workflow 4 — review analytics using $facet (Step 3.4)
 
-## Install the dependencies
-
-```bash
-npm install
-```
-
-## Running
-
-There are a few ways to run this depending on what you need:
-
-Just want the collections and sample data:
-
-```bash
-npm run generate
-```
-
-Want to set up the indexes and see both workflows run:
-
-```bash
-npm run workflows
-```
-
-Want to run everything and get a log file out of it:
-
-```bash
-npm run test
-```
-
-This creates (or overwrites) `logs.json` with the results.
-
 ## Files
 
 `generateData.js` : Creates the 3 collections and adds sample documents to each
@@ -73,7 +45,7 @@ This creates (or overwrites) `logs.json` with the results.
 
 `test.js` : Runs everything above and writes the output to `logs.json`
 
-`logs.json` : Gets created automatically once you run `npm run test`
+`logs.json` : Gets created automatically once we run `npm run test`
 
 ## A log from an actual run
 
