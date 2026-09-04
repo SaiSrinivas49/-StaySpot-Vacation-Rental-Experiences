@@ -2,9 +2,10 @@
 
 ## Repository Information
 
-**GitHub Repository:** [-StaySpot-Vacation-Rental-Experiences] (https://github.com/SaiSrinivas49/-StaySpot-Vacation-Rental-Experiences)
+**GitHub Repository:** [-StaySpot-Vacation-Rental-Experiences](https://github.com/SaiSrinivas49/-StaySpot-Vacation-Rental-Experiences)
 
-**Final Commit Hash:** xxxxx
+
+**Final Commit Hash:** b0b86078ac6c3214c5abc54d316ec42f7d8ad003
 
 # Assumptions
 
