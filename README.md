@@ -7,22 +7,32 @@
 # Assumptions
 
 PostgreSQL is used for transactional data such as guests, properties, bookings, wallet balances, and audit logs.
+
 MongoDB is used for geospatial telemetry data and aggregation-based analytics.
+
 A guest can have at most one CHECKED_IN booking at a time. This is enforced using a partial unique index.
+
 Wallet changes are automatically recorded in the wallet audit table using a PostgreSQL trigger.
+
 The Workflow 2 moving average uses the current row plus the previous six rows, giving a seven-row moving window.
+
 The PostgreSQL seeder generates valid booking records while respecting the partial unique constraint on CHECKED_IN bookings.
+
 The generated data is synthetic and is used for testing database functionality and query performance.
 
 # Performance Proof
 
 The PostgreSQL performance analysis was performed using:
 
+```sql
 EXPLAIN (ANALYZE, BUFFERS)
+```
 
 The Workflow 2 query was executed with EXPLAIN (ANALYZE, BUFFERS).
 
-Workflow 2 – EXPLAIN ANALYZE Output
+### Workflow 2 – EXPLAIN ANALYZE Output
+
+```text
 Incremental Sort  (cost=1972.35..2022.77 rows=1000 width=92) (actual time=43.554..43.595 rows=1000.00 loops=1)
   Sort Key: ranked_properties.booking_date, ranked_properties.revenue_rank
   Presorted Key: ranked_properties.booking_date
@@ -60,21 +70,28 @@ Planning:
   Buffers: shared hit=65 read=3
 Planning Time: 1.258 ms
 Execution Time: 43.915 ms
+```
 
 The following partial unique index is created:
 
+```sql
 create unique idx_active_stay
 on bookings (guest_id)
 where status = 'CHECKED_IN';
+```
 
 This index ensures that the same guest cannot have more than one active CHECKED_IN booking.
 
-Query:
+### Query
 
+```sql
 EXPLAIN (ANALYZE, BUFFERS)
+
 SELECT * FROM bookings WHERE guest_id = (SELECT guest_id FROM bookings WHERE status = 'CHECKED_IN' LIMIT 1)
 AND status = 'CHECKED_IN';
+```
 
+```text
 "QUERY PLAN"
 "Index Scan using idx_active_stay on bookings  (cost=0.49..8.50 rows=1 width=72) (actual time=0.033..0.034 rows=1.00 loops=1)"
 "  Index Cond: (guest_id = (InitPlan 1).col1)"
@@ -89,3 +106,4 @@ AND status = 'CHECKED_IN';
 "                Buffers: shared hit=2"
 "Planning Time: 0.173 ms"
 "Execution Time: 0.060 ms"
+```
